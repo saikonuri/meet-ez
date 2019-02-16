@@ -1,4 +1,6 @@
 import React from 'react';
+import { Icon } from 'react-native-elements'
+import {Agenda} from 'react-native-calendars'
 import {
   Image,
   Platform,
@@ -17,75 +19,57 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
+  onPress = () => {
+    console.log("Area Pressed");
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change this and your app will automatically reload.
+      < View style={styles.container}>
+        <View style={{
+          height: '15%',
+          width: '100%',
+          backgroundColor: '#15db92',
+          alignItems: "center",
+          justifyContent: 'center'
+        }}>
+          <Text style={{
+            fontWeight: 'bold',
+            color: "white",
+            fontSize: 50,
+            position: "absolute",
+            bottom: 0,
+            paddingBottom: 8
+          }}>
+            Meet-Ez
             </Text>
-          </View>
+          <TouchableOpacity style={{
+            position: 'absolute',
+            right: 0,
+            bottom: 0,
+          }}>
+            <Icon
+              reverse
+              name='md-sync'
+              type='ionicon'
+              color='light blue'
+              size= {25}
+            />
+          </TouchableOpacity>
 
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
+        </View>
+        <View style={styles.calendarContainer}>
+          <Agenda 
+          style={{
+            width: "100%",
+          }}
+          onDayPress = {(day)=>{console.log(day)}}
+          ></Agenda>
         </View>
       </View>
     );
   }
 
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
-  }
 
   _handleLearnMorePress = () => {
     WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
@@ -101,7 +85,27 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: "#11e3ff",
+    alignItems: "center",
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: 'center',
+    // backgroundColor: "orange",
+    width: '80%',
+    height: '20%',
+    paddingBottom: 50,
+  },
+  buttonStyle: {
+    alignItems: 'center',
+    justifyContent: "center",
+    backgroundColor: '#007fff',
+    borderRadius: 4,
+  },
+  buttonText: {
+    padding: 4,
   },
   developmentModeText: {
     marginBottom: 20,
@@ -110,13 +114,12 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: 'center',
   },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
+  calendarContainer: {
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 50,
+    height: '95%',
+    width: '95%',
+    backgroundColor:"purple"
   },
   welcomeImage: {
     width: 100,
