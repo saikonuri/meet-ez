@@ -1,12 +1,46 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import LogIn from './components/LogIn';
+import axios from 'axios';
+
 
 export default class App extends React.Component {
-  state = {
-    isLoadingComplete: false,
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      isLoadingComplete: false,
+      signedIn: false
+    };
+  }
+
+  async componentWillMount() {
+    const token = await AsyncStorage.getItem("token");
+    if(token != null && token != "{}"){
+      var fetchToken = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=' + token;
+      try{
+        let response = await fetch(fetchToken);
+        let jsonResp = await response.json();
+        if(!("error" in jsonResp) && !("error_description" in jsonResp)){
+          this.setState({
+            ...this.state,
+            signedIn: true
+          })
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  loginSuccess = async (result) => {
+    await AsyncStorage.setItem("token", result.accessToken); 
+    this.setState({
+      ...this.state,
+      signedIn: true
+    })
+  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
@@ -17,6 +51,10 @@ export default class App extends React.Component {
           onFinish={this._handleFinishLoading}
         />
       );
+    } else if (!this.state.signedIn){
+      return (
+        <LogIn loginSuccess = {result => this.loginSuccess(result)} />
+      )
     } else {
       return (
         <View style={styles.container}>
