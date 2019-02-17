@@ -1,6 +1,7 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text, Button } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { AppLoading, Asset, Font, Icon, Google, AuthSession } from 'expo';
+import { Button } from 'react-native-elements';
 
 const apiKey = 'AIzaSyCCU1JbRgNKl2q1_f8V9zPaUj9EW_ZNBSw';
 const IOS_CLIENT_ID = "209498689625-4v4g1fqfm42gpdpj8jp2hbuhu57c87m3.apps.googleusercontent.com";
@@ -31,10 +32,17 @@ export default class LogIn extends React.Component {
 
     render() {
         return (
-            <View>
-                <Text style={styles.header}>Sign In With Google</Text>
-                <Button title="Sign in with Google"
-                    onPress={() => this.logIn()} />
+            <View style={styles.container}>
+                <Text style={styles.header}>M</Text>
+                <View style={styles.buttonContainer}>
+                    <Button
+                        title="Login"
+                        onPress={() => this.logIn()}
+                        type='clear'
+                        titleStyle={{color: '#F4B400', fontWeight: 'bold', fontSize: 22}}
+                        // buttonStyle={{backgroundColor: '#F4B400'}}
+                    />
+                </View>
             </View>
         );
     }
@@ -42,21 +50,19 @@ export default class LogIn extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center"
+        flex: 1,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center"
     },
     header: {
-      fontSize: 25
+        fontSize: 150,
+        fontWeight: 'bold',
+        color: '#15db92'
     },
-    image: {
-      marginTop: 15,
-      width: 150,
-      height: 150,
-      borderColor: "rgba(0,0,0,0.2)",
-      borderWidth: 3,
-      borderRadius: 150
+    buttonContainer: {
+        width: 100,
+        paddingTop: 75
     }
-  })
+})
 
