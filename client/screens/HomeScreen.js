@@ -36,20 +36,10 @@ export default class HomeScreen extends React.Component {
 
 
   renderItemComponent(item, firstItemInDay) {
-    // console.log("rendering item" + JSON.stringify(item))
-    // return (<View
-    // style={{
-    //   height: 100,
-    //   width: 250,
-    //   borderWidth: 1,
-    //   backgroundColor: "navy"
-    // }
-    // }>
-    // <Text style={{color:'white'}}> {JSON.stringify(item)} </Text>
-    // </View>)
 
-
-    return( <Card>
+    return( <Card style={{
+      backgroundColor: '#fbfbfb',
+    }}>
       <CardTitle
         title="This is a title"
         subtitle="This is subtitle"
@@ -59,13 +49,29 @@ export default class HomeScreen extends React.Component {
       </CardContent>
       <CardAction
         separator={true}
-        inColumn={false}>
-        <CardButton
+        inColumn={false}
+        style={{
+          padding:5,
+        }}>
+        <CardButton style={{
+          flex: 1,
+          // flexDirection: "row",
+          alignItems: 'center',
+          backgroundColor: '#15db92',
+          width:'30%',
+        }}
           onPress={() => { }}
           title="Push"
           color="blue"
         />
-        <CardButton
+        <CardButton style={{
+          flex: 1,
+          // flexDirection: "row",
+          alignItems: 'center',
+          backgroundColor: '#15db92',
+          width:'30%',
+          marginRight:7,
+        }}
           onPress={() => { }}
           title="Later"
           color="blue"
