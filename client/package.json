@@ -17,6 +17,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-calendars": "^1.22.0",
     "react-native-elements": "^1.0.0",
+    "react-native-material-cards": "^1.0.9",
     "react-navigation": "^3.0.9"
   },
   "devDependencies": {

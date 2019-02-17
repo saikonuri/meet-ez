@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icon } from 'react-native-elements'
-import {Agenda} from 'react-native-calendars'
+import { Agenda } from 'react-native-calendars'
+import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards'
 import {
   Image,
   Platform,
@@ -19,8 +20,58 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
-  onPress = () => {
-    console.log("Area Pressed");
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [
+        {
+          '2012-05-22': [{ text: 'item 1 - any js object' }],
+          '2012-05-23': [{ text: 'item 2 - any js object' }],
+          '2012-05-24': [],
+          '2012-05-25': [{ text: 'item 3 - any js object' }, { text: 'any js object' }],
+        }],
+      selected: '2019-02-16'
+    }
+  }
+
+
+  renderItemComponent(item, firstItemInDay) {
+    // console.log("rendering item" + JSON.stringify(item))
+    // return (<View
+    // style={{
+    //   height: 100,
+    //   width: 250,
+    //   borderWidth: 1,
+    //   backgroundColor: "navy"
+    // }
+    // }>
+    // <Text style={{color:'white'}}> {JSON.stringify(item)} </Text>
+    // </View>)
+
+
+    return( <Card>
+      <CardTitle
+        title="This is a title"
+        subtitle="This is subtitle"
+      />
+      <CardContent>
+        <Text>{JSON.stringify(item)}</Text>
+      </CardContent>
+      <CardAction
+        separator={true}
+        inColumn={false}>
+        <CardButton
+          onPress={() => { }}
+          title="Push"
+          color="blue"
+        />
+        <CardButton
+          onPress={() => { }}
+          title="Later"
+          color="blue"
+        />
+      </CardAction>
+    </Card> )
   }
 
   render() {
@@ -53,17 +104,57 @@ export default class HomeScreen extends React.Component {
               name='md-sync'
               type='ionicon'
               color='light blue'
-              size= {25}
+              size={25}
             />
           </TouchableOpacity>
 
         </View>
         <View style={styles.calendarContainer}>
-          <Agenda 
-          style={{
-            width: "100%",
-          }}
-          onDayPress = {(day)=>{console.log(day)}}
+          <Agenda
+            style={{
+              width: "100%",
+            }}
+            items={
+              {
+                '2019-02-15': [{ text: 'item 0 - any js object' }, { text: 'Second item for the 16th' }],
+                '2019-02-16': [{ text: 'item 1 - any js object' }],
+                '2019-02-17': [{ text: 'item 2 - any js object' }],
+                '2012-05-24': [],
+                '2019-02-18': [{ text: 'item 3 - any js object' }],
+              }}
+            // callback that gets called when items for a certain month should be loaded (month became visible)
+            loadItemsForMonth={(month) => { console.log('') }}
+            // callback that fires when the calendar is opened or closed
+            onCalendarToggled={(calendarOpened) => { console.log(calendarOpened) }}
+            // callback that gets called on day press
+            onDayPress={(day) => { console.log('') }}
+            // callback that gets called when day changes while scrolling agenda list
+            onDayChange={(day) => this.setState({ selected: day })}
+            // initially selected day
+            selected={this.state.selected}
+            // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
+            // Max amount of months allowed to scroll to the past. Default = 50
+            pastScrollRange={50}
+            // Max amount of months allowed to scroll to the future. Default = 50
+            futureScrollRange={50}
+            // specify how each item should be rendered in agenda
+            renderItem={(item, firstItemInDay) => { return this.renderItemComponent(item, firstItemInDay); }}
+            // specify how each date should be rendered. day can be undefined if the item is not first in that day.
+            // renderDay={(day, item) => { console.log(item); }}
+            // specify how empty date content with no items should be rendered
+            renderEmptyDate={() => { return (<View />); }}
+            // specify what should be rendered instead of ActivityIndicator
+            renderEmptyData={() => { return (<View />); }}
+            // specify your item comparison function for increased performance
+            rowHasChanged={(r1, r2) => { return r1.text !== r2.text }}
+            // Hide knob button. Default = false
+            hideKnob={false}
+            // If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly.
+            onRefresh={() => console.log('')}
+            // Set this true while waiting for new data from a refresh
+            refreshing={false}
+            // Add a custom RefreshControl component, used to provide pull-to-refresh functionality for the ScrollView.
+            refreshControl={null}
           ></Agenda>
         </View>
       </View>
@@ -119,7 +210,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     height: '95%',
     width: '95%',
-    backgroundColor:"purple"
+    backgroundColor: "purple"
   },
   welcomeImage: {
     width: 100,
