@@ -31,7 +31,7 @@ export default class LinksScreen extends React.Component {
         subtitle="This is subtitle"
       />
       <CardContent>
-        <Text>{JSON.stringify(item)}</Text>
+        <Text>{item.key}</Text>
       </CardContent>
       <CardAction
         separator={true}

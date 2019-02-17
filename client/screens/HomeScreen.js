@@ -45,7 +45,7 @@ export default class HomeScreen extends React.Component {
         subtitle="This is subtitle"
       />
       <CardContent>
-        <Text>{JSON.stringify(item)}</Text>
+        <Text>{item.text}</Text>
       </CardContent>
       <CardAction
         separator={true}
